@@ -15,13 +15,13 @@ const Nav  = (props) => {
       <div className="aside__footer">
         <ul>
           <li>
-            <a href="#">GitHub</a>
+            <a href="https://github.com/aebsr/xo">GitHub</a>
           </li>
           <li>
-            <a href="#">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/aebsr">LinkedIn</a>
           </li>
           <li>
-            <a href="#">&lt;/&gt; by Antoine</a>
+            <a href="http://antoinebutler.com">&lt;/&gt; by Antoine</a>
           </li>
         </ul>
       </div>
