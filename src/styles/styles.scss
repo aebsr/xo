@@ -1,0 +1,183 @@
+@use "sass:color";
+@import 'normalize.css/normalize';
+// @import 'animate.css/source/_vars';
+// @import 'animate.css/source/_base';
+// @import 'animate.css/source/attention_seekers/headShake';
+
+$green: rgb(68,171,93);
+$purple: rgb(116,66,118);
+$gray: rgb(53,76,103);
+$yellow: rgb(246,200,68);
+$maxCellWidth: 166px;
+
+@import 'components/aside';
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+body {
+  $bg_step1: darken($yellow, 10%);
+  $bg_step2: darken($yellow, 20%);
+  $bg_step3: darken($yellow, 45%);
+
+  font: 300 100%/1.5 'Courier', monospace;
+  background: $bg_step3 radial-gradient($yellow, $bg_step1, $bg_step2, $bg_step3);
+  background-attachment: fixed;
+  display: flex;
+  text-align: center;
+  place-content: center;
+  color: white;
+  min-height: 100vh; // shortcut fix for FF collapsing body on large monitors
+}
+
+#app {
+  align-self: center;
+  width: 100%;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+.board {
+  width: clamp(280px, 100vw, 50em);
+  height: clamp(280px, 100vw, 50em);
+  display: grid;
+  grid-gap: 10px;
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin: 2em auto;
+
+  .cell {
+    transition: all 0.3s ease;
+    display: grid;
+    place-content: center;
+    font-weight: 900;
+    font-size: clamp(14vw, 22vw, 175px);
+    line-height: 0.75;
+    text-transform: uppercase;
+    cursor: none;
+    background-image: linear-gradient(white, rgb(246,248,248));
+    border: 5px solid transparent;
+    background-clip: content-box;
+    outline: 2px solid #a9a9a9;
+    cursor: pointer;
+
+    &:nth-child(4),
+    &:nth-child(5),
+    &:nth-child(6) {
+      background-image: linear-gradient(rgb(246,248,248), rgb(250,252,253));
+    }
+
+    &:nth-child(7),
+    &:nth-child(8),
+    &:nth-child(9) {
+      background-image: linear-gradient(rgb(250,252,253), rgb(218,241,251));
+    }
+
+    &:empty:hover {
+      outline-color: mix($green, $purple, 50%);
+    }
+
+    &_x {
+      outline-color: $green;
+      .letter {
+        background-image: linear-gradient(darken($green, 15%), lighten($green, 15%));
+      }
+    }
+
+    &_o {
+      outline-color: $purple;
+      .letter {
+        background-image: linear-gradient(darken($purple, 15%), lighten($purple, 15%));
+      }
+    }
+
+    &_x .letter,
+    &_o .letter {
+      opacity: 1;
+    }
+  }
+
+  .letter {
+    transition: all 0.3s ease;
+    opacity: 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+  }
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.reset-button {
+  font-size: 1.5rem;
+  padding: .6em 1.25em;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  text-transform: uppercase;
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #666;
+  outline: none;
+
+  &:before {
+    content: '';
+    background: rgba(255,255,255,0.1);
+    display: block;
+    position: absolute;
+    height: 2rem;
+    width: 5px;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-2.5px);
+  }
+}
+
+.open-aside {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: none;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  outline: none;
+  display: grid;
+  place-items: center;
+
+  path {
+    fill: white
+  }
+}
+
+.close-aside {
+  @extend .open-aside;
+  position: absolute;
+  padding: 10px;
+}
+
+.winner {
+  transition: transform 0.3s;
+  font-size: 3em;
+  color: black;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -125%);
+
+  &:not(:empty) {
+    transform: translate(-50%, 0)
+  }
+}
